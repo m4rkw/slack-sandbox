@@ -1,0 +1,52 @@
+(version 1)
+
+(deny default)
+
+(allow file*
+  (literal "/dev/null")
+  (subpath "/tmp")
+  (subpath "/var/tmp")
+  (subpath "/private/tmp")
+  (subpath "/private/var/folders")
+  (subpath "/private/var/tmp")
+  (subpath "/Users/admin/Library/Application Support/Slack")
+  (subpath "/Users/admin/Library/Application Support/CrashReporter")
+  (literal "/Users/admin/Library/Preferences/com.tinyspeck.slackmacgap.plist")
+  (literal "/Users/admin/Library/Preferences/com.tinyspeck.slackmacgap.helper.plist")
+  (subpath "/Users/admin/Library/Caches/com.tinyspeck.slackmacgap")
+  (subpath "/Users/admin/Library/Logs/Slack")
+  (subpath "/Users/admin/Library/Logs/DiagnosticReports")
+  (subpath "/Users/admin/Library/Saved Application State/com.tinyspeck.slackmacgap.savedState")
+)
+
+(allow file-read*
+  (subpath "/etc")
+  (literal "/dev/urandom")
+  (subpath "/private/var/run")
+  (subpath "/private/var/db")
+  (subpath "/usr/lib")
+  (subpath "/System/Library")
+  (literal "/Library/Preferences/com.apple.ViewBridge.plist")
+  (subpath "/Applications/Slack.app")
+)
+
+(allow file-read-metadata
+  (subpath "/System")
+  (subpath "/Library")
+  (literal "/Applications")
+  (subpath "/private")
+  (literal "/")
+  (subpath "/var")
+)
+
+(allow process-exec
+  (literal "/Applications/Slack.app/Contents/MacOS/Slack")
+)
+
+(allow iokit*)
+(allow mach*)
+(allow process*)
+(allow network*)
+(allow sysctl-read)
+
+(debug all)
