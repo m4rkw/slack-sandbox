@@ -20,33 +20,44 @@
 )
 
 (allow file-read*
+  (subpath "/Applications/Slack.app")
   (subpath "/etc")
   (literal "/dev/urandom")
   (subpath "/private/var/run")
   (subpath "/private/var/db")
   (subpath "/usr/lib")
-  (subpath "/System/Library")
+  (subpath "/usr/share")
+  (subpath "/Library/Audio/Plug-Ins")
+  (subpath "/Library/CoreMediaIO/Plug-Ins/DAL")
+  (subpath "/Library/Fonts")
   (literal "/Library/Preferences/com.apple.ViewBridge.plist")
-  (subpath "/Applications/Slack.app")
+  (subpath "/System/Library")
+  (subpath "/Users/admin/Library/Keyboard Layouts")
 )
 
 (allow file-read-metadata
+  (literal "/")
   (subpath "/System")
   (subpath "/Library")
-  (literal "/Applications")
+  (subpath "/Applications")
   (subpath "/private")
-  (literal "/")
   (subpath "/var")
+  (subpath "/usr")
 )
 
 (allow process-exec
   (literal "/Applications/Slack.app/Contents/MacOS/Slack")
 )
 
+(allow job-creation (literal "/Library/CoreMediaIO/Plug-Ins/DAL"))
+(allow iokit-set-properties (iokit-property "IOAudioControlValue"))
+
+(allow device-microphone)
+(allow device-camera)
+
 (allow iokit*)
 (allow mach*)
 (allow process*)
 (allow network*)
 (allow sysctl-read)
-
-(debug all)
+(allow lsopen)
