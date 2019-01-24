@@ -60,4 +60,5 @@
 (allow process*)
 (allow network*)
 (allow sysctl-read)
+(allow ipc*)
 (allow lsopen)
