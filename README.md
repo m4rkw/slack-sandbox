@@ -16,11 +16,16 @@ do shell script "/usr/bin/sandbox-exec -f /Users/admin/Documents/slack.sb
   /Applications/Slack.app/Contents/MacOS/Slack &>/dev/null&"
 ````
 
-3) Export the appple script to an applicaton bundle at something like
-/Applications/Slack Launcher.app
+3) Export the appple script to an applicaton bundle named similar to the real
+application but with an additional space at the end, eg:
 
-4) Set your launcher to prefer the Slack Launcher rather than the real Slack
-app. If you use Spotlight this can be achieved by typing the first few
-characters of "slack" and then selecting the launcher for the result rather than
-Slack.app. If you do this for "sl", "sla", "slac" and "slack" you should never
-accidentally run Slack directly.
+````
+/Applications/Slack .app
+````
+
+4) Open System Preferences -> Spotlight -> Privacy and drag the real Slack.app
+from Applications into the private list.
+
+Now when you use Spotlight to launch Slack it will appear to be launching
+Slack but it's really launching the launcher instead and will never launch the
+real Slack directly because it's excluded from Spotlight.
