@@ -5,15 +5,14 @@ it in a sandbox.
 
 ## Instructions
 
-1) Copy slack.sb to ~/Documents/ and change all instances of "/Users/admin" in
-it to your own home directory.
+1) Copy slack.sb to ~/Documents/.
 
 2) Create an apple script with the following command replacing the paths as
 appropriate:
 
 ````
 do shell script "/usr/bin/sandbox-exec -f /Users/admin/Documents/slack.sb 
-  /Applications/Slack.app/Contents/MacOS/Slack &>/dev/null&"
+  -D HOME_PATH=/Users/admin /Applications/Slack.app/Contents/MacOS/Slack &>/dev/null&"
 ````
 
 3) Export the appple script to an applicaton bundle named similar to the real

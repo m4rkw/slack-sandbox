@@ -2,6 +2,17 @@
 
 (deny default)
 
+(define home-path (param "HOME_PATH"))
+
+(define (home-subpath home-relative-subpath)
+  (subpath (string-append home-path home-relative-subpath)))
+
+(define (home-literal home-relative-literal)
+  (literal (string-append home-path home-relative-literal)))
+
+(define (home-regex home-relative-regex)
+    (regex (string-append "^" (regex-quote home-path) home-relative-regex)))
+
 (allow file*
   (literal "/dev/null")
   (subpath "/tmp")
@@ -9,14 +20,14 @@
   (subpath "/private/tmp")
   (subpath "/private/var/folders")
   (subpath "/private/var/tmp")
-  (subpath "/Users/admin/Library/Application Support/Slack")
-  (subpath "/Users/admin/Library/Application Support/CrashReporter")
-  (literal "/Users/admin/Library/Preferences/com.tinyspeck.slackmacgap.plist")
-  (literal "/Users/admin/Library/Preferences/com.tinyspeck.slackmacgap.helper.plist")
-  (subpath "/Users/admin/Library/Caches/com.tinyspeck.slackmacgap")
-  (subpath "/Users/admin/Library/Logs/Slack")
-  (subpath "/Users/admin/Library/Logs/DiagnosticReports")
-  (subpath "/Users/admin/Library/Saved Application State/com.tinyspeck.slackmacgap.savedState")
+  (home-subpath "/Library/Application Support/Slack")
+  (home-subpath "/Library/Application Support/CrashReporter")
+  (home-literal "/Library/Preferences/com.tinyspeck.slackmacgap.plist")
+  (home-literal "/Library/Preferences/com.tinyspeck.slackmacgap.helper.plist")
+  (home-subpath "/Library/Caches/com.tinyspeck.slackmacgap")
+  (home-subpath "/Library/Logs/Slack")
+  (home-subpath "/Library/Logs/DiagnosticReports")
+  (home-subpath "/Library/Saved Application State/com.tinyspeck.slackmacgap.savedState")
 )
 
 (allow file-read*
@@ -32,7 +43,7 @@
   (subpath "/Library/Fonts")
   (literal "/Library/Preferences/com.apple.ViewBridge.plist")
   (subpath "/System/Library")
-  (subpath "/Users/admin/Library/Keyboard Layouts")
+  (home-subpath "/Library/Keyboard Layouts")
 )
 
 (allow file-read-metadata
@@ -45,9 +56,60 @@
   (subpath "/usr")
 )
 
+(allow file-read-data
+  (literal "/")
+  (literal "/Library/Application Support/CrashReporter/SubmitDiagInfo.domains")
+  (literal "/Library/Application Support/Cylance/Desktop/CyMemDef.dylib")
+  (literal "/Library/MessageTracer/SubmitDiagInfo.default.domains.searchtree")
+  (literal "/Library/Preferences/.GlobalPreferences.plist")
+  (literal "/Library/Preferences/Logging/com.apple.diagnosticd.filter.plist")
+  (literal "/Library/Preferences/com.apple.security.plist")
+  (literal "/dev/dtracehelper")
+  (literal "/dev/fd")
+  (literal "/private/etc")
+  (literal "/private/etc/hosts")
+  (home-literal "/Library/Input Methods")
+  (home-literal "/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist")
+  (home-literal "/Library/Preferences/com.apple.symbolichotkeys.plist")
+  (home-literal "/Library/Preferences/.GlobalPreferences.plist")
+  (home-literal "/Library/Preferences/com.apple.CoreGraphics.plist")
+  (home-literal "/Library/Preferences/com.apple.universalaccess.plist")
+  (home-regex "\/Library\/Preferences\/ByHost\/\.GlobalPreferences.*")
+)
+
+(allow file-read-metadata
+  (literal "/Users")
+  (literal "/home")
+  (literal "/net")
+  (literal home-path)
+  (home-literal "/Library")
+  (home-literal "/Library/Application Support")
+  (home-literal "/Library/Logs")
+  (home-literal "/Library/Saved Application State")
+  (home-literal "/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure.plist")
+)
+
+(allow file-read-xattr
+  (literal "/Library/Application Support/CrashReporter/SubmitDiagInfo.domains")
+)
+
+(allow file-write-data
+  (literal "/dev/dtracehelper")
+)
+
+(allow user-preference-read
+  (preference-domain "com.apple.HIToolbox")
+)
+
 (allow process-exec
   (literal "/Applications/Slack.app/Contents/MacOS/Slack")
 )
+
+(allow file-ioctl
+  (literal "/dev/dtracehelper")
+)
+
+(allow signal (target self))
 
 (allow job-creation (literal "/Library/CoreMediaIO/Plug-Ins/DAL"))
 (allow iokit-set-properties (iokit-property "IOAudioControlValue"))
