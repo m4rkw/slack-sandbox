@@ -109,14 +109,13 @@
   (literal "/dev/dtracehelper")
 )
 
-(allow signal (target self))
-
 (allow job-creation (literal "/Library/CoreMediaIO/Plug-Ins/DAL"))
 (allow iokit-set-properties (iokit-property "IOAudioControlValue"))
 
 (allow device-microphone)
 (allow device-camera)
 
+(allow signal)
 (allow iokit*)
 (allow mach*)
 (allow process*)
